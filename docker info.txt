@@ -1,0 +1,242 @@
+https://docs.docker.com/edge/engine/reference/commandline/docker/
+https://get.docker.com/
+https://github.com/collaberagit/chefclasswork -- DevOps -- class code
+
+ docker commit c3f279d17e0a  svendowideit/testimage:version3
+
+How to verify docker client?
+> docker info
+> docker -v
+ 
+How to verify docker daemon?
+> docker pull jenkins
+
+How to get the number of images?
+> docker images
+> docker info
+
+How to run the images?
+> docker run
+> docker run -d -p 8080:8080 -p 50000:50000 jenkins
+
+How to see the number of running containers?
+> docker ps
+
+How to get inside the container?
+> docker exec -it 824719a76622 /bin/bash
+
+How to come out of container without existing container?
+> CTRL + P + Q
+
+How to run another container using the same image?
+> docker run -d -p 8090:8080 -p 50001:50000 jenkins
+
+How to stop the containers?
+> docker stop cont_id
+
+How to start the containers?
+> docker start cont_id
+
+How to see the number of process running inside the containers?
+> docker top cont_id
+
+How to see all the exited containers?
+> docker ps -a
+
+How to delete a containers?
+> docker rm cont_id
+
+How to see the history of the images?
+> docker history image-name
+
+How to delete images?
+> docker rmi image_name
+
+How to see the logs of running containers?
+> docker logs cont_id
+
+How to copy the files from Local machine to Containers?
+> docker cp foo.txt mycontainer:/foo.txt
+
+How to copy the files from containers to current location?
+> docker cp mycontainer:/foo.txt foo.txt
+
+> docker cp qualcomm.txt cecff1003f27:/qualcomm.txt
+> docker cp cecff1003f27:/qualcomm.txt qualcomm1.txt 
+
+
+How to stop all the runnnin containers?
+>docker stop $(docker ps -a -q)
+
+How to delete all stop containers?
+> docker rm $(docker ps -a -q)
+
+
+===========================DAY 2===========================
+
+
+One process per Container
+==============================
+> docker run -d ubuntu /bin/bash -c "ping 8.8.8.8 -c 30"
+
+> docker ps 
+
+> docker top cont-id
+
+> docker ps -a 
+
+The container will "exit" when the process itself exits
+
+
+WORKING WITH CONTAINERS
+==============================
+
+> docker run -d ubuntu:14.04.1 /bin/bash -c "ping 8.8.8.8"
+
+> docker ps
+
+> docker inspect cont-id
+
+> docker attach name-of-container
+& ctrl+c
+
+> docker run --cpu-shares=256
+
+> docker run memory=1g
+
+=========================================
+Docker Engine		-DONE
+
+
+Docker Hub/Repo
+
+
+
+Commands
+How to check the docker version?
+> docker -v
+
+How to see the docker engine system?
+> docker info
+
+How to list out docker images?
+> docker images
+
+How to run the images?
+> docker run
+> docker run -d -p 8080:8080 -p 50000:50000 jenkins
+> docker run -d -p 8081:8080 -p 50001:50000 jenkins
+> docker run -d -p 8081:8080 -p 50001:50000 jenkins
+> docker run -d -p 8082:8080 -p 50002:50000 jenkins --name prod	
+> docker run -d -p 8082:8080 -p 50002:50000 --name prod jenkins 
+
+-p 8080:8080	EXTERNAL:INTERNAL
+
+How to see the number of running containers?
+> docker ps
+
+How to get inside a container?
+> docker exec -it cont-id /bin/bash
+> docker exec -it cecff1003f27 /bin/bash
+
+
+How to come out of the containers with out Exiting?
+> CTRL + P + Q
+
+How to stop the containers?
+> docker stop cont_id
+
+How to start the containers?
+> docker start cont_id
+
+How to delete a container?
+> docker rm cont_id
+
+How to delete the images?
+> docker rmi image-name
+
+How check check the process are running inside?
+> docker top cont_id
+
+How to see the history of the images?
+> docker history image-name
+s
+How to copy the files between the containrs & host machine?
+
+> docker cp qualcomm.txt cecff1003f27:/qualcomm.txt
+> docker cp cecff1003f27:/qualcomm.txt qualcomm1.txt 
+
+How to rename a container?
+> docker rename e8d3d33cdde8 prod1
+
+How to see the logs of the runnning process of the container?
+> docker logs cont-id
+
+How to link these containers?
+MYSQL + PHP 
+
+============LINK===========================
+docker run --name wpmysql -e MYSQL_ROOT_PASSWORD=password -d mysql:5.5
+docker run --name mywp --link wpmysql:mysql -P -d wordpress
+
+docker run --rm --link wpmysql:mysql -P wordpress env
+
+13.126.158.235:32768
+
+
+=================VOLUMES====================
+inspect the containers details
+> docker inspect cont-id
+
+DOT NOT - docker run --name myjenkins -p 8083:8080 -p 50003:50000 -v /opt/jenkins jenkins
+TRY > docker run -p 8080:8080 -p 50000:50000 -v /opt/jenkins:/var/jenkins_home jenkins
+
+
+==============================
+Creating Images Way 1 
+docker commit -m "adding git to ub" -a "raghu" 836ee3dcb361 raghu/ubgit:v1
+
+COPY THE IMAGE FroM ONE PLACE TO ANOTHER
+> docker save -o /tmp/raghu-ubgit.tar raghu/ubgit:v1
+
+>  docker load -i /tmp/raghu-ubgit.tar
+
+====FROM DOCKER
+FROM ubuntu:14.04
+MAINTAINER Raghu <raghu@gmail.com>
+RUN apt-get update && apt-get install -y git
+RUN mkdir /tmp/qualcomm.txt
+
+> docker build -t /ub2:v2 .
+
+
+=====================
+PUBLISHING IMAGE TO REPO
+================================
+
+web:
+  image: wordpress
+  links:
+    - mysql
+  environment:
+   - WORDPRESS_DB_PASSWORD=sample
+  ports:
+   - "127.0.0.3:8080:80"
+mysql:
+  image: mysql:latest
+  environment:
+    - MYSQL_ROOT_PASSWORD=sample
+    - MYSQL_DATABASE=wordpress
+
+
+
+
+Docker Images
+
+Docker Container
+
+
+Questions
+
+1. How to change docker hub perm?
+
