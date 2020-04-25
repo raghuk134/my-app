@@ -3,6 +3,6 @@ node{
      git 'https://github.com/raghuk134/my-app'
    }
    stage('Build'){
-    sh  'mvn clean package'  
+    sh  '/opt/maven/bin/mvn clean package'  
    }
 }
