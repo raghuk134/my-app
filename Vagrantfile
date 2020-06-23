@@ -2,7 +2,7 @@ Vagrant.configure("2") do |config|
 
    config.vm.define "node1" do |node1|
    node1.vm.box = "bento/centos-6.7"
-   node1.vm.hostname = "node1.mylab.local"
+   node1.vm.hostname = "nod11.mylab.local"
    node1.vm.network :private_network, ip: "192.168.56.11"
    config.vm.provision "shell", inline: <<-SHELL
     apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
